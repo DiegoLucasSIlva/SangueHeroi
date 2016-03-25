@@ -15,7 +15,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 import br.com.sangueheroi.sangueheroi.Model.Util.DownloadImage;
-
+//Testando Commit
 public class ActivityTemp extends AppCompatActivity {
 
     private ShareDialog mShareDialog;
