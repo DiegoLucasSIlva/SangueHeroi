@@ -10,4 +10,16 @@
             <style name="Theme.MyTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
         <style name="Theme.MyTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+    <!-- CONTACT ACTIVITY -->
+    <style name="Theme.ContactActivity.Toolbar.BackArrow" parent="Theme.MyTheme">
+        <item name="colorControlNormal">@android:color/white</item>
+    </style>
+
+    <style name="Theme.ContactActivity" parent="Theme.MyTheme">
+        <item name="colorControlNormal">@color/colorSecondText</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+
+
 </resources>

@@ -1,13 +1,17 @@
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
+        android:id="@+id/input_email"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp">
-        <EditText android:id="@+id/input_email"
+        <EditText
+            android:id="@+id/et_input_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
@@ -17,10 +21,12 @@
     <!--  Password Label -->
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
+        android:id="@+id/input_password"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp">
-        <EditText android:id="@+id/input_password"
+        <EditText
+            android:id="@+id/et_input_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
@@ -34,9 +40,8 @@
         android:gravity="center"
         android:textSize="14dip"/>
 
-
     <com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button"
+        android:id="@+id/sign_in_button_facebook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -45,11 +50,15 @@
         android:paddingTop="12dp"
         android:paddingBottom="12dp"/>
 
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button_google"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/esqueceuLogin"
         android:gravity="center"
         android:textSize="14dip"/>
-
     </LinearLayout>

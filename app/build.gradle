@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 23
@@ -10,6 +11,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true;
     }
     buildTypes {
         release {
@@ -25,15 +27,28 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+
+    androidTestCompile 'com.android.support.test:runner:0.2'
+    androidTestCompile 'com.android.support.test:rules:0.2'
+    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.0'
+    androidTestCompile 'com.android.support:support-annotations:23.2.1'
+
+    compile 'com.google.android.gms:play-services-auth:8.3.0'
+    compile 'com.google.android.gms:play-services-identity:8.3.0'
+    compile 'com.google.android.gms:play-services:8.3.0'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
-    // Android SDK
+
+    // sigin with faceboko
     compile 'com.facebook.android:facebook-android-sdk:4.+'
     // Audience Network SDK. Only versions 4.6.0 and above are available
     compile 'com.facebook.android:audience-network-sdk:4.+'
     compile "com.squareup.picasso:picasso:2.4.0"
 
-    compile('com.mikepenz.materialdrawer:library:2.8.2@aar') {
+    compile 'com.mikepenz:google-material-typeface:2.2.0.1@aar'
+    compile 'com.mikepenz:fontawesome-typeface:4.4.0.1@aar'
+    compile 'com.mikepenz:octicons-typeface:3.0.0.1@aar'
+    compile('com.mikepenz:materialdrawer:5.1.6@aar') {
         transitive = true
     }
 

@@ -5,24 +5,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".controller.LoginActivity">
 
-
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
         <android.support.v7.widget.Toolbar
-            app:popupTheme="@style/Theme.AppCompat.NoActionBar"
             android:id="@+id/toolbar"
             android:layout_height="?attr/actionBarSize"
             android:layout_width="match_parent"
             android:minHeight="?attr/actionBarSize"
             android:layout_alignParentLeft="true"
             android:title="Login"
-            android:background="?attr/colorPrimary"/>
+            android:background="?attr/colorPrimary"
+            android:titleTextColor = "@color/colorWhite"
+            app:theme="@style/Theme.ContactActivity.Toolbar.BackArrow"
+            android:fitsSystemWindows="true"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />/>
+    </android.support.design.widget.AppBarLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:padding="20dp">
+        <include layout="@layout/content_login" />
+    </ScrollView>
 
     <FrameLayout
-        android:layout_below="@+id/toolbar"
+        android:id="@+id/fl_proxy"
+        android:background="#66999999"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <include layout="@layout/content_login" />
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
     </FrameLayout>
 </RelativeLayout>

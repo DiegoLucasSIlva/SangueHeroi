@@ -1,4 +1,4 @@
-package br.com.sangueheroi.sangueheroi;
+package br.com.sangueheroi.sangueheroi.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,11 +14,22 @@ import android.widget.TextView;
 import com.facebook.login.LoginManager;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
-import br.com.sangueheroi.sangueheroi.Model.Util.DownloadImage;
-//Testando Commit
-public class ActivityTemp extends AppCompatActivity {
+
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import br.com.sangueheroi.sangueheroi.R;
+
+//Esta activity eh temporaria para testes
+
+public class ActivityTemp extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
     private ShareDialog mShareDialog;
+    GoogleApiClient mGoogleApiClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,14 +40,23 @@ public class ActivityTemp extends AppCompatActivity {
 
         Bundle inBundle = getIntent().getExtras();
         String name = inBundle.get("name").toString();
-        String surname = inBundle.get("surname").toString();
         String imageUrl = inBundle.get("imageUrl").toString();
 
         TextView nameView = (TextView) findViewById(R.id.nameAndSurname);
-        nameView.setText("" + name + " " + surname);
+        nameView.setText(name);
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this , this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
 
         mShareDialog = new ShareDialog(this);
-        new DownloadImage((ImageView) findViewById(R.id.profileImage)).execute(imageUrl);
+       // new DownloadImage((ImageView) findViewById(R.id.profileImage)).execute(imageUrl);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -63,8 +83,9 @@ public class ActivityTemp extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.logout) {
             logout();
+            signOut();
             return true;
         }
 
@@ -79,4 +100,26 @@ public class ActivityTemp extends AppCompatActivity {
     }
 
 
+    private void signOut() {
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                        Intent login = new Intent(ActivityTemp.this, LoginActivity.class);
+                        startActivity(login);
+                        finish();
+                    }
+                });
+    }
+
+
+    @Override
+    public void onClick(View v) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
 }
