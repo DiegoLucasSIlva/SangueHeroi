@@ -182,8 +182,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         int id = item.getItemId();
 
         if (id == android.R.id.home) {
-            Log.v(TAG, " HOMEFINISH()");
-            finish();
+            Log.v(TAG, " finish()");
+            this.finish();
         }
         if( id == R.id.action_send ){
             boolean hasError = false;
@@ -225,6 +225,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             Intent main = new Intent(LoginActivity.this, HomeActivity.class);
             main.putExtra("name", profile.getName());
+            main.putExtra("email"," ");
             main.putExtra("imageUrl", profile.getProfilePictureUri(200, 200).toString());
             startActivity(main);
         }

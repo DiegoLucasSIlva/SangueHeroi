@@ -86,15 +86,23 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
 
         mShareDialog = new ShareDialog(this);
 
+        profile = new ProfileDrawerItem();
+
         Bundle inBundle = getIntent().getExtras();
+        if(inBundle.isEmpty()) {
+            Log.d(TAG, "    inBundle esta nulo -Exibir mensagem de erro e fechar :");
+            finish();
+        }
         String name = inBundle.get("name").toString();
         String imageUrl = inBundle.get("imageUrl").toString();
-        Log.v(TAG, imageUrl);
-
-        profile = new ProfileDrawerItem();
+        if(!inBundle.get("email").toString().isEmpty()) {
+            String email = inBundle.get("email").toString();
+            profile.withEmail(email);
+        }
         //profile.withIcon(FontAwesome.Icon.faw_cart_plus);
         profile.withName(name);
-        new gerarBitmap().execute(imageUrl);
+
+        new GerarBitmap().execute(imageUrl);
 
         // Create the AccountHeader
         buildHeader(false, savedInstanceState);
@@ -238,7 +246,7 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     /*Essa classe eh resposnsavel por fazer o downoload da imagem fora da mainThread*/
-    private class gerarBitmap extends AsyncTask<String, Void, Bitmap> {
+    private class GerarBitmap extends AsyncTask<String, Void, Bitmap> {
 
         @Override
         protected Bitmap doInBackground(String... urls) {

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="?attr/actionBarSize"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="60dp">
+
+    <Button android:id="@+id/btn_cadastro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_cadastro"
+        android:onClick="sendCadastro"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="40dp"
+        android:textColor="@android:color/white"/>
+
+
+    <Button android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_login"
+        android:onClick="sendLogin"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="40dp"
+        android:textColor="@android:color/white"/>
+</LinearLayout>
+

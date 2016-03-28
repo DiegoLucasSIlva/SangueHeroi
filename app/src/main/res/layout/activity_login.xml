@@ -11,7 +11,8 @@
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:theme="@style/Theme.MyTheme.AppBarOverlay">
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_height="?attr/actionBarSize"
@@ -20,10 +21,9 @@
             android:layout_alignParentLeft="true"
             android:title="Login"
             android:background="?attr/colorPrimary"
-            android:titleTextColor = "@color/colorWhite"
             app:theme="@style/Theme.ContactActivity.Toolbar.BackArrow"
             android:fitsSystemWindows="true"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />/>
+            app:popupTheme="@style/Theme.MyTheme.PopupOverlay" />
     </android.support.design.widget.AppBarLayout>
 
     <ScrollView

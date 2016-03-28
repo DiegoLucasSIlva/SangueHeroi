@@ -13,8 +13,37 @@
     <string name="facebook_app_id">997031106999408</string>
     <string name="title_activity_finalizar_cadastro">FinalizarCadastro</string>
     <string name="title_activity_menu_principal">MenuPrincipalActivity</string>
-    <string name= "action_send_contact">Logar</string>
+    <string name="action_send_contact">Logar</string>
 
+    <string name="title_activity_inicio">Sangue Heroi</string>
+
+    <string name="text_user_name">Nome Usuário</string>
+    <string name="text_name">Nome</string>
+    <string name="text_fone">Telefone</string>
+    <string name="text_email">Email</string>
+    <string name="text_password">Senha</string>
+    <string name="btn_cadastro">Cadastre-se</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="err_msg_name">Insira um nome</string>
+    <string name="err_msg_fone">Insira um Telefone</string>
+    <string name="err_msg_email">Insira um email valido</string>
+    <string name="err_msg_password">Insira uma senha</string>
+    <string name="title_or">---------- OU ----------</string>
+    <string name="btn_login">Login</string>
+    <string name="title_activity_cadastro">CadastroActivity</string>
+
+    <string-array name="tipos">
+
+        <item>Selecionar Tipo Sanguineo</item>
+        <item>Tipo A+</item>
+        <item>Tipo A-</item>
+        <item>Tipo B+</item>
+        <item>Tipo A+</item>
+        <item>Tipo A+</item>
+        <item>Tipo A+</item>
+        <item>Tipo A+</item>
+        <item>Tipo A+</item>
+    </string-array>
 
 
 </resources>

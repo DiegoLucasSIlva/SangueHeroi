@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +30,7 @@ public class ActivityTemp extends AppCompatActivity implements GoogleApiClient.O
 
     private ShareDialog mShareDialog;
     GoogleApiClient mGoogleApiClient;
+    private final String TAG = "LOG";
 
 
     @Override
@@ -39,8 +41,17 @@ public class ActivityTemp extends AppCompatActivity implements GoogleApiClient.O
         setSupportActionBar(toolbar);
 
         Bundle inBundle = getIntent().getExtras();
+        if(!inBundle.isEmpty()) {
+            Log.d(TAG, "    inBundle esta nulo -Exibir mensagem de erro e fechar :");
+            finish();
+
+        }
         String name = inBundle.get("name").toString();
         String imageUrl = inBundle.get("imageUrl").toString();
+        if(!inBundle.get("email").toString().isEmpty()) {
+            String email = inBundle.get("email").toString();
+        }
+
 
         TextView nameView = (TextView) findViewById(R.id.nameAndSurname);
         nameView.setText(name);
