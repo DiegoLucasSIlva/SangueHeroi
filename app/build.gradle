@@ -23,6 +23,8 @@ android {
 
 repositories {
     mavenCentral()
+    maven { url 'http://ksoap2-android.googlecode.com/svn/m2-repo' }
+    jcenter()
 }
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -49,6 +51,8 @@ dependencies {
     compile 'com.mikepenz:fontawesome-typeface:4.4.0.1@aar'
     compile 'com.mikepenz:octicons-typeface:3.0.0.1@aar'
     compile 'com.github.ganfra:material-spinner:1.1.0'
+    compile 'com.google.code.ksoap2-android:ksoap2-android:3.4.0'
+    compile 'com.nispok:snackbar:2.10.+'
 
     compile('com.mikepenz:materialdrawer:5.1.6@aar') {
         transitive = true

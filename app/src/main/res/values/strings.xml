@@ -27,7 +27,11 @@
     <string name="err_msg_name">Insira um nome</string>
     <string name="err_msg_fone">Insira um Telefone</string>
     <string name="err_msg_email">Insira um email valido</string>
+    <string name="err_msg_tipo_sanguineo">Insira um tipo sanguineo</string>
+
     <string name="err_msg_password">Insira uma senha</string>
+    <string name="err_msg_password_confirm">Senha divergente</string>
+
     <string name="title_or">---------- OU ----------</string>
     <string name="btn_login">Login</string>
     <string name="title_activity_cadastro">CadastroActivity</string>

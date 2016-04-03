@@ -1,6 +1,7 @@
 package br.com.sangueheroi.sangueheroi.controller;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -24,7 +28,11 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+
+import org.ksoap2.serialization.SoapPrimitive;
+
 import br.com.sangueheroi.sangueheroi.R;
+import br.com.sangueheroi.sangueheroi.network.RequestWS;
 import br.com.sangueheroi.sangueheroi.wrapper.FacebookApi;
 import br.com.sangueheroi.sangueheroi.wrapper.GoogleApi;
 
@@ -40,6 +48,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private TextInputLayout inputPassword;
     private EditText etInputEmail;
     private EditText etInputPassword;
+    SoapPrimitive     resultString;
+    RequestWS         requestWs;
+    ProgressBar       mProgress;
+
 
 
     private static final int SIGN_IN_CODE = 9001;
@@ -48,11 +60,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private FacebookCallback<LoginResult> callback;
     private final String TAG = "LOG";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.v(TAG, " onCreate()");
         super.onCreate(savedInstanceState);
-
         /*Intanciando os objetos da Wrapper das api*/
         googleApi = new GoogleApi();
         facebookApi = new FacebookApi(callbackManager, accessTokenTracker, profileTracker, this);
@@ -60,10 +72,24 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        setupViews();
+
+
+        // Build a GoogleApiClient with access to the Google Sign-In API and the
+        // options specified by gso.
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, googleApi.getGso())
+                .build();
+    }
+
+
+    private void setupViews() {
+        mProgress = (ProgressBar) findViewById(R.id.carregando);
+        mProgress.setVisibility(View.INVISIBLE);
         // toolbar.setTitleTextColor(Material.White);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(false);
-
         /*Configurandos os botoes de ambas API's*/
         loginButtonFacebook = (LoginButton) findViewById(R.id.sign_in_button_facebook);
         loginButtonFacebook.setReadPermissions("user_friends");
@@ -79,13 +105,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         inputPassword = (TextInputLayout) findViewById(R.id.input_password);
         etInputEmail = (EditText) findViewById(R.id.et_input_email);
         etInputPassword = (EditText) findViewById(R.id.et_input_password);
-
-        // Build a GoogleApiClient with access to the Google Sign-In API and the
-        // options specified by gso.
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, googleApi.getGso())
-                .build();
     }
 
     /*O onStart so executa comandos para o login com o Google*/
@@ -211,9 +230,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 contact.setEmail( UtilTCM.getEmailAccountManager(this) );
                 contact.setSubject(etSubject.getText().toString());
                 contact.setMessage( etMessage.getText().toString() );
-
                 NetworkConnection.getInstance(this).execute( this, ContactActivity.class.getName() );
                 */
+                mProgress.setVisibility(View.VISIBLE);
+                AsyncCallWS task = new AsyncCallWS();
+                task.execute();
             }
         }
 
@@ -245,15 +266,34 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
-/*
-    @Override
-    public WrapObjToNetwork doBefore() {
-        flProxy.setVisibility(View.VISIBLE);
+    /*Essa AsynTask sera chamada para o login normal*/
+    private class AsyncCallWS extends AsyncTask<Void, Void, String> {
 
-        if( UtilTCM.verifyConnection(this) ){
-            return( new WrapObjToNetwork(car, "send-contact", contact ) );
+        @Override
+        protected void onPreExecute() {
+            Log.i(TAG, "onPreExecute");
         }
-        return null;
-    }*/
+
+        @Override
+        protected String doInBackground(Void... params) {
+            Log.i(TAG, "doInBackground");
+            requestWs = new RequestWS();
+
+            SoapPrimitive result = requestWs.callServiceLogin();
+            if(result == null){
+                return  result.toString() + "Nada retornado";
+            }
+            return result.toString();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            mProgress.setVisibility(View.INVISIBLE);
+            Log.i(TAG, "onPostExecute");
+            Toast.makeText(LoginActivity.this, "Response" + result.toString(), Toast.LENGTH_LONG).show();
+        }
+
+    }
+
 
 }
