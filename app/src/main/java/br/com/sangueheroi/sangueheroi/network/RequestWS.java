@@ -24,11 +24,14 @@ public class RequestWS implements  ContractWS{
 
     }
     @Override
-    public SoapPrimitive callServiceLogin() {
-        String  METHOD_NAME = "testarRetorno";
+    public SoapPrimitive callServiceLogin(Usuario usuario) {
+        String  METHOD_NAME = "efetuarLogin";
         try {
+            Log.d(TAG, "callServiceLogin "+usuario.toString());
+
             SoapObject Request = new SoapObject(URL, METHOD_NAME);
-            Request.addProperty("json", "");
+            Request.addProperty("login",usuario.getNome());
+            Request.addProperty("senha",usuario.getSenha());
 
             result = callServiceGeneric(Request, METHOD_NAME);
         } catch (Exception ex) {
@@ -39,12 +42,23 @@ public class RequestWS implements  ContractWS{
 
     @Override
     public SoapPrimitive callServiceCadastraUsuario(Usuario usuario) {
-        String  METHOD_NAME = "testarRetorno";
+        String  METHOD_NAME = "registrarUsuario";
+        Log.d(TAG, "callServiceCadastraUsuario "+usuario.toString());
 
         try {
             SoapObject Request = new SoapObject(URL, METHOD_NAME);
-            Request.addProperty("json", "");
-
+            Request.addProperty("nome", usuario.getNome());
+            Request.addProperty("email", usuario.getEmail());
+            Request.addProperty("senha", usuario.getSenha());
+            Request.addProperty("logradouro", "Rua dos blbla");
+            Request.addProperty("bairro", "Rua dos blbla");
+            Request.addProperty("cidade", "Rua dos blbla");
+            Request.addProperty("estado", "Rua dos blbla");
+            Request.addProperty("cep", "Rua dos blbla");
+            Request.addProperty("tipo_sanguineo", usuario.getTipo_s());
+            Request.addProperty("dtnascimento", "11/02/2016");
+            Request.addProperty("dtultimadoacao", "11/02/2016");
+            Request.addProperty("codigo_heroi ", "1");
 
             result = callServiceGeneric(Request, METHOD_NAME);
         } catch (Exception ex) {

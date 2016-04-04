@@ -32,6 +32,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import org.ksoap2.serialization.SoapPrimitive;
 
 import br.com.sangueheroi.sangueheroi.R;
+import br.com.sangueheroi.sangueheroi.model.Usuario;
 import br.com.sangueheroi.sangueheroi.network.RequestWS;
 import br.com.sangueheroi.sangueheroi.wrapper.FacebookApi;
 import br.com.sangueheroi.sangueheroi.wrapper.GoogleApi;
@@ -51,6 +52,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     SoapPrimitive     resultString;
     RequestWS         requestWs;
     ProgressBar       mProgress;
+    Usuario usuario;
 
 
 
@@ -232,6 +234,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 contact.setMessage( etMessage.getText().toString() );
                 NetworkConnection.getInstance(this).execute( this, ContactActivity.class.getName() );
                 */
+                usuario = new Usuario();
+                usuario.setNome(etInputEmail.getText().toString().trim());
+                usuario.setSenha(etInputPassword.getText().toString().trim());
+
                 mProgress.setVisibility(View.VISIBLE);
                 AsyncCallWS task = new AsyncCallWS();
                 task.execute();
@@ -278,19 +284,30 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         protected String doInBackground(Void... params) {
             Log.i(TAG, "doInBackground");
             requestWs = new RequestWS();
-
-            SoapPrimitive result = requestWs.callServiceLogin();
-            if(result == null){
-                return  result.toString() + "Nada retornado";
+            while (!isCancelled()) {
+                SoapPrimitive result = requestWs.callServiceLogin(usuario);
+                if (result == null) {
+                    return "false";
+                }
+                return result.toString();
             }
-            return result.toString();
+            return "false";
         }
 
         @Override
         protected void onPostExecute(String result) {
             mProgress.setVisibility(View.INVISIBLE);
             Log.i(TAG, "onPostExecute");
-            Toast.makeText(LoginActivity.this, "Response" + result.toString(), Toast.LENGTH_LONG).show();
+            if(result.toString().equals("false")) {
+                Toast.makeText(LoginActivity.this, "Usuario ou senha inválido(s)", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(LoginActivity.this, "Login feito com Sucesso!", Toast.LENGTH_SHORT).show();
+              //  Intent main = new Intent(LoginActivity.this, HomeActivity.class);
+              //  startActivity(main);
+            }
+
+
         }
 
     }

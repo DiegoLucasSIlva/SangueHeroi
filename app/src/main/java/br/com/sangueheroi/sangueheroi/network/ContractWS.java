@@ -15,7 +15,7 @@ public interface ContractWS{
     final String   SOAP_ACTION = "http://sangueheroiweb.azurewebsites.net/WebService.asmx/";
     final String   URL         = "http://sangueheroiweb.azurewebsites.net/WebService.asmx";
 
-    public SoapPrimitive callServiceLogin();
+    public SoapPrimitive callServiceLogin(Usuario usuario);
 
     public SoapPrimitive callServiceCadastraUsuario(Usuario usuario);
 

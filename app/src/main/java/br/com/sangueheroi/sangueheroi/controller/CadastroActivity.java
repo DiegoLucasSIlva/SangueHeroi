@@ -264,26 +264,34 @@ public class CadastroActivity extends AppCompatActivity implements AdapterView.O
         protected String doInBackground(Void... params) {
             Log.i(TAG, "doInBackground");
 
-            while (!isCancelled()){
-            requestWs = new RequestWS();
+            while (!isCancelled()) {
+                requestWs = new RequestWS();
 
-            SoapPrimitive result = requestWs.callServiceCadastraUsuario(usuario);
-            if(result == null){
-                return  result.toString() + "Nada retornado";
+                SoapPrimitive result = requestWs.callServiceCadastraUsuario(usuario);
+                if (result == null) {
+                    return "false";
+                }
+                return result.toString();
             }
-            return result.toString();
-            }
-            return " ";
+            return "false";
         }
 
         @Override
         protected void onPostExecute(String result) {
             mProgress.setVisibility(View.INVISIBLE);
-            Log.i(TAG, "onPostExecute");
-            Toast.makeText(CadastroActivity.this, "Response" + result.toString(), Toast.LENGTH_SHORT).show();
+            if(result.toString().equals("false")) {
+                Toast.makeText(CadastroActivity.this, "Ops, Ocorreu um erro, tente novamente", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(CadastroActivity.this, "Cadastro efetuado com sucesso", Toast.LENGTH_SHORT).show();
+                //  Intent main = new Intent(LoginActivity.this, HomeActivity.class);
+                //  startActivity(main);
+            }
+
+
+        }
         }
 
 
     }
 
-}
