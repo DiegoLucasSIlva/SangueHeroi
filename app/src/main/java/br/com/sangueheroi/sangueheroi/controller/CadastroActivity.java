@@ -30,8 +30,8 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 public class CadastroActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     MaterialSpinner spinner_blood;
-    EditText nome,  fone, email, senha, confirmaSenha;
-    TextInputLayout iNome, iFone, iEmail, iSenha, iConfirmaSenha;
+    EditText nome,  email, senha, confirmaSenha;
+    TextInputLayout iNome, iEmail, iSenha, iConfirmaSenha;
     private Usuario usuario = new Usuario();
     Button          btnSinup;
     String          tipoSanguineoAux;
@@ -51,7 +51,7 @@ public class CadastroActivity extends AppCompatActivity implements AdapterView.O
         btnSinup.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.d(TAG, "onClickButton- onCreate:");
-                if(validaNome() &&validaEmail() && validaSenha() && validaTelefone() && validaTipoSanguineo()){
+                if(validaNome() &&validaEmail() && validaSenha() && validaTipoSanguineo()){
                   //  Toast.makeText(CadastroActivity.this, "Response" + usuario.toString(), Toast.LENGTH_LONG).show();
                     AsyncCallWSCadastro task = new AsyncCallWSCadastro();
                     task.execute();
@@ -70,35 +70,19 @@ public class CadastroActivity extends AppCompatActivity implements AdapterView.O
         mProgress = (ProgressBar) findViewById(R.id.carregando);
         mProgress.setVisibility(View.INVISIBLE);
         nome = (EditText) findViewById(R.id.input_name);
-        fone = (EditText) findViewById(R.id.input_fone);
         email = (EditText) findViewById(R.id.input_email);
         senha = (EditText) findViewById(R.id.input_password);
         confirmaSenha = (EditText) findViewById(R.id.input_password_confirm);
 
         iNome = (TextInputLayout) findViewById(R.id.input_layout_name);
-        iFone = (TextInputLayout) findViewById(R.id.input_layout_fone);
         iEmail = (TextInputLayout) findViewById(R.id.input_layout_email);
         iSenha = (TextInputLayout) findViewById(R.id.input_layout_password);
         iConfirmaSenha = (TextInputLayout) findViewById(R.id.input_layout_password_confirm);
 
 
-
-        TelephonyManager tMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-        String meuNumero = tMgr.getLine1Number();
-        fone.setText(meuNumero);
-
-        //Instaciando e alimentando o Spinner de escolha do tipo sanguineo.
-        String[] ITEMS = {"Selecionar Tipo Sanguineo",
-                "Tipo A+",
-                "Tipo A-",
-                "Tipo B+",
-                "Tipo B-",
-                "Tipo AB+",
-                "Tipo AB-",
-                "Tipo O+",
-                "Tipo O-"
-        };
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ITEMS);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ITEMS);
+        ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this,
+                R.array.tipos, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_blood = (MaterialSpinner) findViewById(R.id.spinner_blood);
         spinner_blood.setAdapter(adapter);
@@ -152,27 +136,13 @@ public class CadastroActivity extends AppCompatActivity implements AdapterView.O
             Toast.makeText(CadastroActivity.this, getString(R.string.err_msg_tipo_sanguineo), Toast.LENGTH_LONG).show();
             return false;
         } else {
-            usuario.setTipo_s(tipoSanguineoAux);
+            usuario.setTipo_sanguineo(tipoSanguineoAux);
         }
         return true;
     }
 
 
-    //Método para validar Telefone
-    private boolean validaTelefone() {
-        Log.d(TAG, "CadastroActivity- validaTelefone():");
 
-        if (fone.getText().toString().trim().isEmpty()) {
-            iNome.setError(getString(R.string.err_msg_fone));
-            requestFocus(fone);
-            return false;
-        } else {
-            iFone.setErrorEnabled(false);
-            usuario.setFone(fone.getText().toString());
-        }
-
-        return true;
-    }
 
 
     // Método para validar Senha
@@ -255,14 +225,16 @@ public class CadastroActivity extends AppCompatActivity implements AdapterView.O
 
         @Override
         protected void onPreExecute() {
-            Log.i(TAG, "onPreExecute");
+            Log.i(TAG, "AsyncCallWSCadastro- onPreExecute");
             mProgress.setVisibility(View.VISIBLE);
+            mProgress.setIndeterminate(false);
+
 
         }
 
         @Override
         protected String doInBackground(Void... params) {
-            Log.i(TAG, "doInBackground");
+            Log.i(TAG, "AsyncCallWSCadastro- doInBackground");
 
             while (!isCancelled()) {
                 requestWs = new RequestWS();
@@ -278,6 +250,8 @@ public class CadastroActivity extends AppCompatActivity implements AdapterView.O
 
         @Override
         protected void onPostExecute(String result) {
+            Log.i(TAG, "AsyncCallWS-Cadastro");
+
             mProgress.setVisibility(View.INVISIBLE);
             if(result.toString().equals("false")) {
                 Toast.makeText(CadastroActivity.this, "Ops, Ocorreu um erro, tente novamente", Toast.LENGTH_SHORT).show();

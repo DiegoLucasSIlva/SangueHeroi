@@ -55,7 +55,7 @@ public class RequestWS implements  ContractWS{
             Request.addProperty("cidade", "Rua dos blbla");
             Request.addProperty("estado", "Rua dos blbla");
             Request.addProperty("cep", "Rua dos blbla");
-            Request.addProperty("tipo_sanguineo", usuario.getTipo_s());
+            Request.addProperty("tipo_sanguineo", usuario.getTipo_sanguineo());
             Request.addProperty("dtnascimento", "11/02/2016");
             Request.addProperty("dtultimadoacao", "11/02/2016");
             Request.addProperty("codigo_heroi ", "1");

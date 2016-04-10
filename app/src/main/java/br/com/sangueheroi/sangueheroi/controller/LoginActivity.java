@@ -277,12 +277,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         @Override
         protected void onPreExecute() {
-            Log.i(TAG, "onPreExecute");
+            Log.i(TAG, "AsyncCallWS- onPreExecute");
         }
+
 
         @Override
         protected String doInBackground(Void... params) {
-            Log.i(TAG, "doInBackground");
+            Log.i(TAG, "AsyncCallWS -doInBackground");
             requestWs = new RequestWS();
             while (!isCancelled()) {
                 SoapPrimitive result = requestWs.callServiceLogin(usuario);
@@ -290,6 +291,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     return "false";
                 }
                 return result.toString();
+
             }
             return "false";
         }
@@ -297,7 +299,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         @Override
         protected void onPostExecute(String result) {
             mProgress.setVisibility(View.INVISIBLE);
-            Log.i(TAG, "onPostExecute");
+            Log.i(TAG, "AsyncCallWS -onPostExecute");
             if(result.toString().equals("false")) {
                 Toast.makeText(LoginActivity.this, "Usuario ou senha inválido(s)", Toast.LENGTH_SHORT).show();
             }

@@ -67,7 +67,6 @@ public class ActivityTemp extends AppCompatActivity implements GoogleApiClient.O
 
 
         mShareDialog = new ShareDialog(this);
-       // new DownloadImage((ImageView) findViewById(R.id.profileImage)).execute(imageUrl);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +108,6 @@ public class ActivityTemp extends AppCompatActivity implements GoogleApiClient.O
         startActivity(login);
         finish();
     }
-
 
     private void signOut() {
         Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(

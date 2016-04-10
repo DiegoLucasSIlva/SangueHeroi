@@ -29,7 +29,7 @@
     <include layout="@layout/content_cadastro" />
     </ScrollView>
 
-    <LinearLayout
+    <FrameLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,6 +40,6 @@
             style="@android:style/Widget.ProgressBar.Large.Inverse"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </LinearLayout>
+    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>
