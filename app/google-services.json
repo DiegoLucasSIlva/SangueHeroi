@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_id": "sangueheroi-1501",
+    "project_number": "43844248731",
+    "name": "SangueHeroi"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43844248731:android:8ffdaddd0dae2cff",
+        "client_id": "android:br.com.sangueheroi.sangueheroi",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "br.com.sangueheroi.sangueheroi",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "43844248731-1j800em7l17h70f1n8i3dghhp6k0tg7g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.sangueheroi.sangueheroi",
+            "certificate_hash": "5C41CA23F4E2CAA6EFB89158C46455A03B34002E"
+          }
+        },
+        {
+          "client_id": "43844248731-qq425m9na9ms79dqbmjqnki0e6igvu92.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
