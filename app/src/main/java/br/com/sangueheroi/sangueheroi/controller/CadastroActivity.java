@@ -90,6 +90,8 @@ public class CadastroActivity extends AppCompatActivity implements AdapterView.O
     }
 
 
+
+
     //Método para validar Nome
     private boolean validaNome() {
         Log.d(TAG, "CadastroActivity- validaNome():");
