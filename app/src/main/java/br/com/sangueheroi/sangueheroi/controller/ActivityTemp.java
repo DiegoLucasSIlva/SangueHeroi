@@ -65,7 +65,6 @@ public class ActivityTemp extends AppCompatActivity implements GoogleApiClient.O
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-
         mShareDialog = new ShareDialog(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
