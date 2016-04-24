@@ -4,12 +4,19 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
+import br.com.sangueheroi.sangueheroi.model.HistoricoDoacoes;
 import br.com.sangueheroi.sangueheroi.model.Usuario;
 
 /**
@@ -67,7 +74,30 @@ public class RequestWS implements  ContractWS{
         return result;
     }
 
-    private SoapPrimitive callServiceGeneric(SoapObject Request,String METHOD_NAME) {
+    @Override
+    public ArrayList<HistoricoDoacoes> callServiceHistoricoDoacoes(String email) {
+        String  METHOD_NAME = "historicoDoacoes";
+
+        Log.d(TAG, "callServiceHistoricoDoacoes "+email);
+
+        try{
+            SoapObject Request = new SoapObject(URL, METHOD_NAME);
+            Request.addProperty("email", email);
+
+            result = callServiceGeneric(Request, METHOD_NAME);
+        } catch (Exception ex) {
+            Log.e(TAG, "Error: " + ex.getMessage());
+        }
+        try {
+            return getList(result.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public SoapPrimitive callServiceGeneric(SoapObject Request,String METHOD_NAME) {
         try {
 
             SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -94,6 +124,35 @@ public class RequestWS implements  ContractWS{
             return true;
         } else {
             return false;
+        }
+    }
+
+
+    private ArrayList<HistoricoDoacoes> getList(String serviceResult) throws IOException {
+        {
+            ArrayList<HistoricoDoacoes> lista = new ArrayList<>();
+
+            try {
+                JSONArray root = new JSONArray(serviceResult);
+                JSONObject item = null;
+                for (int i = 0; i < root.length(); i++) {
+                    item = (JSONObject) root.get(i);
+
+                    String data_doacao = item.getString("DATA_DOACAO");
+                    String endereco_doacao = item.getString("LOGRADOURO_ENDERECO_DOACAO");
+                    String cep_endereco_doacao = item.getString("CEP_ENDERECO_DOACAO");
+
+                    lista.add(new HistoricoDoacoes(data_doacao, endereco_doacao, cep_endereco_doacao));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } finally {
+                if (lista.size() == 0)
+                    lista.add(new HistoricoDoacoes("Você não possui nenhuma doaçao registrada", "", ""));
+
+                Log.d(TAG, "RequestReceived " + serviceResult);
+            }
+            return lista;
         }
     }
 

@@ -48,6 +48,7 @@
         <item>Tipo A+</item>
         <item>Tipo A+</item>
     </string-array>
+    <string name="title_activity_historico_doacoes">HistoricoDoacoesActivity</string>
 
 
 </resources>

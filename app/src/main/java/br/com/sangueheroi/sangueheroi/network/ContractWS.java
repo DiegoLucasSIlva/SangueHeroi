@@ -6,6 +6,9 @@ package br.com.sangueheroi.sangueheroi.network;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 
+import java.util.ArrayList;
+
+import br.com.sangueheroi.sangueheroi.model.HistoricoDoacoes;
 import br.com.sangueheroi.sangueheroi.model.Usuario;
 
 /**
@@ -19,6 +22,8 @@ public interface ContractWS{
 
     public SoapPrimitive callServiceCadastraUsuario(Usuario usuario);
 
+    public ArrayList<HistoricoDoacoes> callServiceHistoricoDoacoes(String email);
 
+    public SoapPrimitive callServiceGeneric(SoapObject Request,String METHOD_NAME);
 
-}
+    }
